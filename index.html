@@ -1,597 +1,1514 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Kurt Simon Claridad - IT Student Portfolio showcasing projects, skills, and experience in web development and technology.">
-  <meta name="keywords" content="Portfolio, IT, Web Development, Kurt Simon Claridad, Information Technology, Bacolod">
-  <meta property="og:title" content="Kurt Simon Claridad | IT Portfolio">
-  <meta property="og:description" content="Bachelor of Science in Information Technology student showcasing projects and technical skills.">
-  <meta property="og:image" content="P.jpg">
-  <meta property="og:type" content="website">
-  <title>Kurt Simon Claridad | Portfolio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-  html {
-    scroll-behavior: smooth;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0d12">
+<meta name="description" content="Kurt Simon Claridad - IT Student Portfolio showcasing projects, skills, and experience in web development and technology.">
+<meta name="keywords" content="Portfolio, IT, Web Development, Kurt Simon Claridad, Information Technology, Bacolod">
+<meta property="og:title" content="Kurt Simon Claridad | IT Portfolio">
+<meta property="og:description" content="Bachelor of Science in Information Technology student showcasing projects and technical skills.">
+<meta property="og:image" content="P.jpg">
+<meta property="og:type" content="website">
+<title>Kurt Simon Claridad | Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --bg: #0a0d12;
+  --bg-alt: #0d1117;
+  --surface: #11151c;
+  --surface-2: #171c25;
+  --surface-hover: #1c222d;
+  --border: #232a36;
+  --border-soft: #1a2029;
+  --text: #e7e9ec;
+  --text-muted: #8c97a6;
+  --text-faint: #586273;
+  --accent: #e8b34c;
+  --accent-dim: #c99a3e;
+  --accent-soft: rgba(232,179,76,0.12);
+  --accent-glow: rgba(232,179,76,0.35);
+  --green: #7fd99a;
+  --green-soft: rgba(127,217,154,0.12);
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --ease: cubic-bezier(.22,1,.36,1);
+  /* Desktop scale — reduces all rem-based sizes slightly */
+  font-size: 15px;
+}
+
+*,*::before,*::after{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin:0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+ul{ list-style: none; margin:0; padding:0; }
+a{ color: inherit; text-decoration:none; }
+img{ max-width:100%; display:block; }
+button{ font-family: inherit; cursor:pointer; }
+
+:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
-  ul {
-    list-style: none;
-  }
-.example-2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
-.example-2 .icon-content {
-  margin: 0 10px;
-  position: relative;
-}
-.example-2 .icon-content .tooltip {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 5px;
-  opacity: 0;
-  visibility: hidden;
-  font-size: 14px;
-  transition: all 0.3s ease;
-}
-.example-2 .icon-content:hover .tooltip {
-  opacity: 1;
-  visibility: visible;
-  top: -50px;
-}
-.example-2 .icon-content a {
-  position: relative;
+
+.mono{ font-family: var(--font-mono); }
+
+/* ============================================================
+   AMBIENT BACKGROUND
+   ============================================================ */
+.bg-fx{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 1px) 0 0/28px 28px,
+    var(--bg);
+}
+.bg-fx span{
+  position: absolute;
+  width: 46vw;
+  height: 46vw;
   border-radius: 50%;
-  color: #4d4d4d;
-  background-color: #fff;
-  transition: all 0.3s ease-in-out;
+  filter: blur(90px);
+  opacity: .16;
+  animation: drift 22s ease-in-out infinite alternate;
 }
-.example-2 .icon-content a:hover {
-  box-shadow: 3px 2px 45px 0px rgb(0 0 0 / 12%);
+.bg-fx span.b1{ background: var(--accent); top:-12%; left:-10%; }
+.bg-fx span.b2{ background: var(--green); bottom:-15%; right:-8%; animation-delay: -8s; }
+@keyframes drift{
+  0%{ transform: translate(0,0) scale(1); }
+  100%{ transform: translate(4%,6%) scale(1.15); }
 }
-.example-2 .icon-content a svg {
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position: fixed;
+  top:0; left:0; right:0;
+  z-index: 100;
+  background: rgba(10,13,18,0.82);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-soft);
+}
+.nav-inner{
+  max-width: 1100px;
+  margin: 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  height: 58px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:.55rem;
+  font-family: var(--font-mono);
+  font-size: .88rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+.brand .dot{
+  width:8px; height:8px; border-radius:50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(127,217,154,.6);
+  animation: pulse 2.4s infinite;
+  flex-shrink:0;
+}
+@keyframes pulse{
+  0%{ box-shadow: 0 0 0 0 rgba(127,217,154,.5); }
+  70%{ box-shadow: 0 0 0 7px rgba(127,217,154,0); }
+  100%{ box-shadow: 0 0 0 0 rgba(127,217,154,0); }
+}
+.brand .accent{ color: var(--accent); }
+
+.tabs{
+  display:flex;
+  gap: .15rem;
+  align-items:center;
+}
+.tab{
+  background: transparent;
+  border: none;
+  border-top: 2px solid transparent;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  padding: .5rem .75rem .45rem;
+  border-radius: 4px 4px 0 0;
+  transition: color .2s var(--ease), background .2s var(--ease);
+  position: relative;
+  white-space: nowrap;
+}
+.tab:hover{ color: var(--text); background: var(--surface); }
+.tab.is-active{
+  color: var(--accent);
+  background: var(--surface);
+  border-top-color: var(--accent);
+}
+.menu-btn{
+  display:none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  width: 40px; height: 40px;
+  align-items:center; justify-content:center;
+  flex-direction: column;
+  gap: 4px;
+}
+.menu-btn span{
+  display:block; width: 18px; height: 2px; background: var(--text);
+  transition: transform .25s var(--ease), opacity .25s var(--ease);
+}
+.menu-btn.is-open span:nth-child(1){ transform: translateY(6px) rotate(45deg); }
+.menu-btn.is-open span:nth-child(2){ opacity: 0; }
+.menu-btn.is-open span:nth-child(3){ transform: translateY(-6px) rotate(-45deg); }
+
+.mobile-panel{
+  display:none;
+  flex-direction: column;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border-soft);
+  padding: .5rem .75rem .85rem;
+}
+.mobile-panel.is-open{ display:flex; }
+.mobile-panel .tab{
+  text-align:left;
+  border-top:none;
+  border-left: 2px solid transparent;
+  border-radius: 4px;
+  padding: .65rem .75rem;
+  font-size: .9rem;
+}
+.mobile-panel .tab.is-active{ border-left-color: var(--accent); background: var(--surface); }
+
+@media (max-width: 860px){
+  .tabs{ display:none; }
+  .menu-btn{ display:flex; }
+}
+
+/* ============================================================
+   LAYOUT / SECTIONS
+   ============================================================ */
+main{ padding-top: 58px; }
+.view{ display:none; }
+.view.is-active{ display:block; animation: viewIn .45s var(--ease); }
+@keyframes viewIn{
+  from{ opacity:0; transform: translateY(10px); }
+  to{ opacity:1; transform: translateY(0); }
+}
+.wrap{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+.section-pad{ padding: 3.5rem 0 4rem; min-height: 78vh; }
+
+.section-tag{
+  font-family: var(--font-mono);
+  color: var(--green);
+  font-size: .82rem;
+  margin: 0 0 .5rem;
+  letter-spacing: .02em;
+}
+.section-title{
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.8vw, 2rem);
+  margin: 0 0 2rem;
+  color: var(--text);
+}
+.section-title em{ color: var(--accent); font-style: normal; }
+
+.reveal{
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .6s var(--ease), transform .6s var(--ease);
+}
+.reveal.is-visible{ opacity:1; transform: translateY(0); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: stretch;
+  min-height: 58vh;
+  padding: 3rem 0 2rem;
+}
+.hero-media{
+  position: relative;
+  width: 100%;
+  min-height: 380px;
+  isolation: isolate;
+  animation: hero-rise .7s var(--ease) both;
+}
+.hero-right{
+  display: grid;
+  gap: 1.5rem;
+}
+
+.hero-media__glow{
+  position: absolute;
+  inset: -16%;
+  z-index: 0;
+  border-radius: 40%;
+  background: conic-gradient(from 0deg, var(--accent), transparent 26%, var(--green) 50%, transparent 76%, var(--accent));
+  filter: blur(48px);
+  opacity: .55;
+  animation: hero-spin 9s linear infinite;
+  pointer-events: none;
+}
+
+.hero-media__frame{
   position: relative;
   z-index: 1;
-  width: 30px;
-  height: 30px;
-}
-.example-2 .icon-content a:hover {
-  color: white;
-}
-.example-2 .icon-content a .filled {
-  position: absolute;
-  top: auto;
-  bottom: 0;
-  left: 0;
   width: 100%;
-  height: 0;
-  background-color: #000;
-  transition: all 0.3s ease-in-out;
-}
-.example-2 .icon-content a:hover .filled {
   height: 100%;
+  min-height: 380px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 60px -30px rgba(0,0,0,.6), 0 0 0 1px rgba(232,179,76,.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+  will-change: transform;
 }
-.example-2 .icon-content a[data-social="facebook"] .filled,
-.example-2 .icon-content a[data-social="facebook"] ~ .tooltip {
-  background-color: #1877f3;
+.hero-media__frame::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, rgba(255,255,255,.025) 0 1px, transparent 1px 3px);
+  pointer-events: none;
 }
-.example-2 .icon-content a[data-social="instagram"] .filled,
-.example-2 .icon-content a[data-social="instagram"] ~ .tooltip {
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+
+.hero-media__tag{
+  position: absolute;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .02em;
+  pointer-events: none;
 }
-.example-2 .icon-content a[data-social="tiktok"] .filled,
-.example-2 .icon-content a[data-social="tiktok"] ~ .tooltip {
-  background-color: #000;
-} </style>
+.hero-media__tag--open{ top: -1.45rem; left: .15rem; color: var(--accent-dim); }
+.hero-media__tag--close{ bottom: -1.45rem; right: .15rem; color: var(--green); }
+
+.hero-photo{
+  width: auto;
+  max-width: 80%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  position: relative;
+  z-index: 1;
+  transform: scale(1);
+  transition: transform .7s var(--ease);
+}
+.hero-media:hover .hero-photo{
+  transform: scale(1.04);
+}
+
+.hero-badge{
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  background: rgba(13,17,23,.82);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: .35rem .7rem .35rem .55rem;
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  color: var(--text-muted);
+  box-shadow: 0 10px 24px -12px rgba(0,0,0,.5);
+}
+.hero-badge .chip-dot{
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(127,217,154,.6);
+  animation: pulse 2.4s infinite;
+  flex-shrink: 0;
+}
+.hero-badge .chip-label{ color: var(--green); }
+
+@keyframes hero-spin{ to{ transform: rotate(360deg); } }
+@keyframes hero-rise{ from{ opacity:0; transform: translateY(16px); } to{ opacity:1; transform: translateY(0); } }
+.hero-copy{ animation: hero-rise .7s var(--ease) .08s both; }
+.terminal{ animation: hero-rise .7s var(--ease) .16s both; }
+.hero-copy .eyebrow{
+  font-family: var(--font-mono);
+  color: var(--green);
+  font-size: .82rem;
+  margin: 0 0 .75rem;
+}
+.hero-copy h1{
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 3.2vw, 2.3rem);
+  line-height: 1.25;
+  margin: 0 0 .85rem;
+  font-weight: 700;
+}
+.hero-copy h1 .accent{ color: var(--accent); }
+.hero-copy p{
+  color: var(--text-muted);
+  font-size: .97rem;
+  max-width: 46ch;
+  margin: 0 0 1.5rem;
+}
+.cta-row{ display:flex; gap: .9rem; flex-wrap: wrap; }
+
+.btn{
+  font-family: var(--font-mono);
+  font-size: .84rem;
+  padding: .7rem 1.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+.btn:hover{ transform: translateY(-2px); }
+.btn--primary{
+  background: var(--accent);
+  color: #15110a;
+  font-weight: 600;
+  border-color: var(--accent);
+}
+.btn--primary:hover{ box-shadow: 0 10px 28px -10px var(--accent-glow); }
+.btn--primary::before{
+  content:'';
+  position:absolute; top:0; left:-60%;
+  width: 40%; height:100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,.45), transparent);
+  transform: skewX(-20deg);
+  transition: left .6s var(--ease);
+}
+.btn--primary:hover::before{ left: 130%; }
+.btn--ghost{ background: transparent; color: var(--text); }
+.btn--ghost:hover{ background: var(--surface); border-color: var(--text-faint); }
+
+/* terminal */
+.terminal{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 20px 40px -20px rgba(0,0,0,.5);
+  overflow:hidden;
+}
+.terminal__bar{
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  padding: .55rem .85rem;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+.terminal__bar .tl{ width:10px; height:10px; border-radius:50%; }
+.tl.r{ background:#ff5f57; } .tl.y{ background:#febc2e; } .tl.g{ background:#28c840; }
+.terminal__bar .title{
+  margin-left: .4rem;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--text-faint);
+}
+.terminal__body{
+  padding: 1.2rem 1.2rem 1.4rem;
+  font-family: var(--font-mono);
+  font-size: .88rem;
+  min-height: 200px;
+}
+.terminal__line{ display:flex; gap:.5rem; margin-bottom:.35rem; }
+.terminal__line .prompt{ color: var(--green); flex-shrink:0; }
+.terminal__output{
+  color: var(--text-muted);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .4s var(--ease), transform .4s var(--ease);
+  margin: .5rem 0 1.1rem 1.3rem;
+}
+.terminal__output.is-visible{ opacity:1; transform:none; }
+.terminal__output p{ margin:.15rem 0; }
+.terminal__output .key{ color: var(--accent); }
+.cursor{
+  display:inline-block;
+  width: 8px; height: 1.05em;
+  background: var(--accent);
+  margin-left: 2px;
+  animation: blink 1s steps(1) infinite;
+  vertical-align: middle;
+}
+@keyframes blink{ 50%{ opacity:0; } }
+
+/* ============================================================
+   HERO MOBILE
+   ============================================================ */
+@media (max-width: 860px){
+  .hero{
+    grid-template-columns: 1fr;
+    min-height:auto;
+    padding: 2rem 0 1rem;
+    gap: 1.8rem;
+  }
+  .hero-media{
+    min-height: 300px;
+    max-width: 340px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .hero-media__frame{ min-height: 300px; }
+  .hero-media__tag{ display: none; }
+  .hero-badge{ font-size: .65rem; }
+  .hero-copy h1{ font-size: clamp(1.35rem, 5.5vw, 1.8rem); }
+  .hero-copy p{ font-size: .92rem; max-width: 100%; }
+  .cta-row{ flex-direction: column; gap: .6rem; }
+  .cta-row .btn{ width: 100%; text-align: center; }
+}
+
+@media (max-width: 480px){
+  .hero-media{
+    min-height: 250px;
+    max-width: 280px;
+  }
+  .hero-media__frame{ min-height: 250px; }
+}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-grid{
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 2.5rem;
+  align-items:start;
+}
+.kv-card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.5rem;
+}
+.kv-row{
+  display:flex; gap:.5rem;
+  font-family: var(--font-mono);
+  font-size: .88rem;
+  padding: .5rem 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+.kv-row:last-child{ border-bottom:none; }
+.kv-row .k{ color: var(--accent); white-space:nowrap; }
+.kv-row .v{ color: var(--text-muted); font-size: .84rem; }
+
+.interests{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+  margin-top: 1.2rem;
+}
+.interest-chip{
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: .65rem .85rem;
+  display:flex; align-items:center; gap:.6rem;
+  font-size: .85rem;
+  transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+}
+.interest-chip:hover{
+  transform: translateY(-3px);
+  border-color: var(--accent-dim);
+  background: var(--surface-hover);
+}
+.interest-chip .e{ font-size: 1.15rem; }
+
+.contact-block{ margin-top: 1.2rem; font-family: var(--font-mono); font-size: .85rem; color: var(--text-muted); }
+.contact-block p{ margin: .3rem 0; }
+.contact-block a:hover{ color: var(--accent); }
+
+.snippet{
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  overflow:hidden;
+}
+.snippet__bar{
+  padding: .55rem .85rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-faint);
+  font-size: .73rem;
+}
+.snippet__body{ padding: 1.2rem 1.3rem; line-height:1.85; }
+.snippet .kw{ color:#c792ea; }
+.snippet .prop{ color: var(--text); }
+.snippet .str{ color: var(--green); }
+.snippet .num{ color: var(--accent); }
+.snippet .pun{ color: var(--text-faint); }
+
+.socials{ display:flex; gap: .85rem; margin-top: 1.3rem; }
+.social-icon{
+  width: 42px; height:42px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  position: relative;
+  overflow:hidden;
+  color: var(--text-muted);
+  transition: transform .25s var(--ease), color .25s var(--ease);
+}
+.social-icon svg{ width:19px; height:19px; position:relative; z-index:2; }
+.social-icon .fill{
+  position:absolute; left:0; bottom:0; width:100%; height:0;
+  transition: height .3s var(--ease);
+  z-index:1;
+}
+.social-icon:hover{ transform: translateY(-3px); color:#fff; }
+.social-icon:hover .fill{ height:100%; }
+.social-icon[data-social="facebook"] .fill{ background:#1877f3; }
+.social-icon[data-social="instagram"] .fill{ background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+.social-icon[data-social="tiktok"] .fill{ background:#000; }
+
+@media (max-width: 860px){
+  .about-grid{ grid-template-columns: 1fr; }
+  .kv-row .v{ word-break: break-word; }
+}
+
+/* ============================================================
+   SKILLS
+   ============================================================ */
+.skills-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+.skill-card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow:hidden;
+  transition: border-color .25s var(--ease), transform .25s var(--ease);
+}
+.skill-card:hover{ transform: translateY(-4px); border-color: var(--accent-dim); }
+.skill-card__head{
+  padding: .8rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: .77rem;
+  color: var(--text-faint);
+  display:flex; justify-content:space-between;
+}
+.skill-card__head .accent{ color: var(--accent); }
+.skill-row{
+  display:flex; align-items:center; justify-content:space-between;
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  padding: .6rem 1.1rem;
+  border-bottom: 1px solid var(--border-soft);
+  transition: background .2s var(--ease), padding-left .2s var(--ease);
+}
+.skill-card .skill-row:last-child{ border-bottom:none; }
+.skill-row:hover{ background: var(--surface-2); padding-left: 1.4rem; }
+.skill-row .name::before{ content:'"'; color: var(--text-faint); }
+.skill-row .name::after{ content:'"'; color: var(--text-faint); }
+.skill-row .name{ color: var(--text); }
+.skill-row .ver{ color: var(--green); }
+
+@media (max-width: 860px){ .skills-grid{ grid-template-columns: 1fr; gap: 1rem; } }
+@media (min-width: 480px) and (max-width: 860px){ .skills-grid{ grid-template-columns: 1fr 1fr; } }
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+.projects-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+.project-card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow:hidden;
+  transition: transform .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+  display: flex;
+  flex-direction: column;
+}
+.project-card:hover{
+  transform: translateY(-5px);
+  border-color: var(--accent-dim);
+  box-shadow: 0 20px 40px -24px rgba(0,0,0,.65);
+}
+.project-media{
+  position: relative;
+  height: 160px;
+  overflow:hidden;
+  background: var(--bg-alt);
+  display:flex;
+  flex-shrink: 0;
+}
+/* Clickable media — cursor pointer */
+.project-media__link{
+  display:block;
+  width:100%;
+  height:100%;
+  cursor: pointer;
+}
+.project-media img,
+.project-media video{
+  width:100%; height:100%; object-fit:cover;
+  transition: transform .5s var(--ease);
+  pointer-events: none;
+}
+.project-card:hover .project-media img,
+.project-card:hover .project-media video{ transform: scale(1.07); }
+.project-media__hint{
+  position:absolute; bottom:.6rem; left:.7rem;
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  color:#fff;
+  background: rgba(0,0,0,.6);
+  padding: .22rem .5rem;
+  border-radius: 4px;
+  pointer-events:none;
+  /* Always visible on touch, fade in on desktop hover */
+  opacity: 1;
+}
+@media (hover: hover){
+  .project-media__hint{
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity .25s var(--ease), transform .25s var(--ease);
+  }
+  .project-card:hover .project-media__hint{ opacity:1; transform:none; }
+}
+
+.project-media--split{ gap:2px; }
+.project-media--split .project-media__link{ width:50%; }
+
+.project-body{
+  padding: 1rem 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.project-body h3{
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--accent);
+  margin: 0 0 .45rem;
+}
+.project-body p{ color: var(--text-muted); font-size: .87rem; margin:0 0 .85rem; flex: 1; }
+.tag-row{ display:flex; flex-wrap:wrap; gap:.4rem; margin-top: auto; }
+.tag{
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  color: var(--green);
+  background: var(--green-soft);
+  border: 1px solid rgba(127,217,154,.25);
+  padding: .22rem .5rem;
+  border-radius: 999px;
+}
+.tag::before{ content:'#'; opacity:.7; margin-right:1px; }
+
+@media (max-width: 980px){ .projects-grid{ grid-template-columns: 1fr 1fr; } }
+@media (max-width: 580px){ .projects-grid{ grid-template-columns: 1fr; } }
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+.lightbox{
+  display:none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(5,8,13,0.93);
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+.lightbox.is-open{ display:flex; }
+.lightbox__inner{
+  position: relative;
+  width: min(1100px, 94vw);
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox__preview{
+  width: 100%;
+  max-height: 90vh;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox__preview img,
+.lightbox__preview video{
+  max-width: 100%;
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+.lightbox__close{
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(16,20,28,.9);
+  color: var(--text);
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10000;
+  transition: border-color .2s, background .2s;
+}
+.lightbox__close:hover{
+  border-color: var(--accent);
+  background: rgba(30,36,48,.95);
+}
+
+/* Tap-anywhere hint on mobile */
+.lightbox__tap-hint{
+  position: fixed;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--text-faint);
+  pointer-events: none;
+  display: none;
+}
+@media (max-width: 640px){
+  .lightbox__tap-hint{ display: block; }
+}
+
+/* ============================================================
+   EDUCATION
+   ============================================================ */
+.timeline{ max-width: 740px; }
+.timeline__row{
+  display:flex;
+  gap: 1rem;
+  padding: 1rem .85rem;
+  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--border);
+  transition: background .25s var(--ease), border-color .25s var(--ease);
+}
+.timeline__row:hover{ background: var(--surface); border-left-color: var(--accent); }
+.timeline__num{
+  font-family: var(--font-mono);
+  color: var(--text-faint);
+  font-size: .82rem;
+  flex-shrink:0;
+  padding-top: .15rem;
+}
+.timeline__row:hover .timeline__num{ color: var(--accent); }
+.timeline__content h3{
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  margin: 0 0 .12rem;
+  color: var(--text);
+}
+.timeline__content .when{ color: var(--green); font-family: var(--font-mono); font-size: .77rem; }
+.timeline__content p{ color: var(--text-muted); margin: .45rem 0 0; font-size: .88rem; }
+
+@media (max-width: 580px){
+  .timeline__row{ flex-direction: column; gap: .35rem; padding: .9rem .75rem; }
+  .timeline__num{ font-size: .76rem; }
+}
+
+/* ============================================================
+   EXPERIENCE
+   ============================================================ */
+.gitlog{ max-width: 800px; }
+.gitlog__entry{
+  display:flex;
+  gap: 1.1rem;
+  padding: 1rem .85rem;
+  border-left: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: background .25s var(--ease), border-color .25s var(--ease);
+}
+.gitlog__entry:hover{ background: var(--surface); border-left-color: var(--green); }
+.gitlog__hash{
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: .82rem;
+  flex-shrink:0;
+  padding-top:.2rem;
+}
+.gitlog__content h3{
+  font-family: var(--font-mono);
+  font-size: .97rem;
+  margin: 0 0 .2rem;
+  color: var(--text);
+}
+.gitlog__content .meta{ font-family: var(--font-mono); font-size: .75rem; color: var(--text-faint); }
+.gitlog__content p{ color: var(--text-muted); margin: .5rem 0 0; font-size: .88rem; }
+
+@media (max-width: 580px){
+  .gitlog__entry{ flex-direction: column; gap: .3rem; }
+  .gitlog__hash{ font-size: .76rem; }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{
+  border-top: 1px solid var(--border-soft);
+  padding: 2.2rem 0 2rem;
+  text-align:center;
+}
+footer .echo{
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-size: .87rem;
+}
+footer .echo .prompt{ color: var(--green); }
+footer .echo .out{ color: var(--accent); }
+footer .copyright{ color: var(--text-faint); font-size: .78rem; margin-top: .8rem; }
+
+/* ============================================================
+   GENERAL MOBILE TWEAKS
+   ============================================================ */
+@media (max-width: 480px){
+  .wrap{ padding: 0 1rem; }
+  .section-pad{ padding: 2.5rem 0 3rem; }
+  .section-title{ margin-bottom: 1.5rem; }
+  .interests{ grid-template-columns: 1fr 1fr; }
+  .interest-chip{ font-size: .8rem; padding: .55rem .65rem; }
+  .cta-row{ gap: .5rem; }
+}
+</style>
 </head>
-<body class="bg-black text-white font-sans">
+<body>
 
-  
-  <header>
-    <nav class="fixed top-0 left-0 w-full bg-black bg-opacity-80 shadow-md z-50" role="navigation" aria-label="Main navigation">
-      <div class="container mx-auto flex justify-between items-center py-4 px-4 md:px-6">
-        <h1 class="text-2xl font-bold text-red-400">Portfolio</h1>
-       
-        <button id="menu-btn" class="md:hidden text-red-400 focus:outline-none" aria-label="Toggle mobile menu" aria-expanded="false">
-          <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path id="hamburger-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
-          </svg>
-        </button>
-        
-        <ul id="navbar-links" class="hidden md:flex space-x-4 md:space-x-8 text-lg absolute md:static top-full left-0 w-full md:w-auto bg-black md:bg-transparent bg-opacity-95 md:bg-opacity-100 md:shadow-none shadow-lg md:rounded-none rounded-b-lg md:p-0 p-4 z-40 max-h-screen overflow-y-auto">
-          <li><button data-section="home" class="nav-link hover:text-red-400 w-full text-left md:text-center focus:outline-none focus:ring-2 focus:ring-red-400">> Home</button></li>
-          <li><button data-section="about" class="nav-link hover:text-red-400 w-full text-left md:text-center focus:outline-none focus:ring-2 focus:ring-red-400">> About</button></li>
-          <li><button data-section="skills" class="nav-link hover:text-red-400 w-full text-left md:text-center focus:outline-none focus:ring-2 focus:ring-red-400">> Skills</button></li>
-          <li><button data-section="projects" class="nav-link hover:text-red-400 w-full text-left md:text-center focus:outline-none focus:ring-2 focus:ring-red-400">> Projects</button></li>
-          <li><button data-section="education" class="nav-link hover:text-red-400 w-full text-left md:text-center focus:outline-none focus:ring-2 focus:ring-red-400">> Education</button></li>
-          <li><button data-section="experience" class="nav-link hover:text-red-400 w-full text-left md:text-center focus:outline-none focus:ring-2 focus:ring-red-400">> Experience</button></li>
-        </ul>
-      </div>
-    </nav>
-  </header>
+<div class="bg-fx" aria-hidden="true"><span class="b1"></span><span class="b2"></span></div>
 
-  
-  <main class="pt-28 md:pt-24">
-    
-    <section id="home" class="section container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-center min-h-[80vh]" aria-label="Home section">
-      <div class="flex justify-center md:w-1/2">
-        <img src="P.jpg" alt="Kurt Simon Claridad - Professional portrait photo" class="rounded-full w-48 h-48 md:w-80 md:h-80 border-4 border-red-500 object-cover" loading="eager">
-      </div>
-      <div class="md:w-1/2 mt-8 md:mt-0 md:ml-10 text-center md:text-left">
-        <h2 class="text-2xl md:text-4xl font-bold mb-4">Hi, It's <span class="text-red-400">Kurt Simon Claridad</span></h2>
-        <h3 class="text-lg md:text-2xl font-semibold mb-6">Bachelor of Science in Information Technology</h3>
-        <p class="text-gray-300 mb-6 text-base md:text-lg">
-          Highly skilled and detail-oriented IT student with a strong foundation in Information Technology principles. 
-          Proficient in web development, database management, and team leadership with hands-on project experience.
-        </p>
-        <button data-section="about" class="hire-btn bg-red-400 text-black px-6 py-3 rounded-full font-semibold hover:bg-red-500 transition focus:outline-none focus:ring-2 focus:ring-red-400">
-          Hire Me
-        </button>
-      </div>
-    </section>
+<header>
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="brand"><span class="dot" aria-hidden="true"></span>kurt<span class="accent">@</span>portfolio</div>
 
-  
-    <section id="about" class="section container mx-auto px-4 md:px-6 hidden min-h-[80vh] flex flex-col md:flex-row items-center justify-center" aria-label="About section">
-    
-      <div class="md:w-1/2 w-full md:pr-10 mb-8 md:mb-0">
-        <h2 class="text-2xl md:text-3xl font-bold mb-8 border-b-2 border-red-400 inline-block">About</h2>
-        <div class="bg-gray-900 p-6 rounded-lg shadow hover:shadow-red-400 text-gray-300">
-          <ul class="space-y-4 text-left">
-            <li><span class="font-semibold text-red-400">Age:</span> 21</li>
-            <li><span class="font-semibold text-red-400">Address:</span> Earth Street, Fuentebella Taculing Bacolod City, Negros Occidental</li>
-            <li><span class="font-semibold text-red-400">College Level:</span> 4th Year</li>
-            <li>
-              <span class="font-semibold text-red-400">Interests:</span>
-              <div class="grid grid-cols-2 gap-4 mt-4">
-                <div class="bg-gray-800 p-4 rounded-lg flex items-center space-x-3 shadow hover:shadow-red-400">
-                  <span class="text-2xl">🏀</span>
-                  <span>Basketball</span>
-                </div>
-                <div class="bg-gray-800 p-4 rounded-lg flex items-center space-x-3 shadow hover:shadow-red-400">
-                  <span class="text-2xl">📚</span>
-                  <span>Reading</span>
-                </div>
-                <div class="bg-gray-800 p-4 rounded-lg flex items-center space-x-3 shadow hover:shadow-red-400">
-                  <span class="text-2xl">🎧</span>
-                  <span>Listening to music</span>
-                </div>
-                <div class="bg-gray-800 p-4 rounded-lg flex items-center space-x-3 shadow hover:shadow-red-400">
-                  <span class="text-2xl">🎮</span>
-                  <span>Online games</span>
-                </div>
-              </div>
-            </li>
-            <!-- Socials added to About section -->
-            <li>
-              <span class="font-semibold text-red-400">Socials:</span>
-              <ul class="example-2 mt-4">
-                <li class="icon-content">
-                  <a href="https://facebook.com/kurtsimonnn" target="_blank" rel="noopener noreferrer" data-social="facebook" aria-label="Visit Facebook profile">
-                    <span class="tooltip">Facebook</span>
-                    <span class="filled"></span>
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.326 24h11.495v-9.294H9.691v-3.622h3.13V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.405 24 24 23.408 24 22.674V1.326C24 .592 23.405 0 22.675 0"/>
-                    </svg>
-                  </a>
-                </li>
-                <li class="icon-content">
-                  <a href="https://instagram.com/vinn_whyy" target="_blank" rel="noopener noreferrer" data-social="instagram" aria-label="Visit Instagram profile">
-                    <span class="tooltip">Instagram</span>
-                    <span class="filled"></span>
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.131 4.659.363 3.678 1.344c-.98.98-1.213 2.092-1.272 3.373C2.013 5.668 2 6.077 2 12c0 5.923.013 6.332.072 7.613.059 1.281.292 2.393 1.272 3.373.98.98 2.092 1.213 3.373 1.272C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.281-.059 2.393-.292 3.373-1.272.98-.98 1.213-2.092 1.272-3.373.059-1.281.072-1.69.072-7.613 0-5.923-.013-6.332-.072-7.613-.059-1.281-.292-2.393-1.272-3.373-.98-.98-2.092-1.213-3.373-1.272C15.668.013 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-                    </svg>
-                  </a>
-                </li>
-                <li class="icon-content">
-                  <a href="https://tiktok.com/@kikurtt" target="_blank" rel="noopener noreferrer" data-social="tiktok" aria-label="Visit TikTok profile">
-                    <span class="tooltip">TikTok</span>
-                    <span class="filled"></span>
-                    <svg viewBox="0 0 48 48" fill="currentColor">
-                      <path d="M41.5 15.5c-3.6 0-6.5-2.9-6.5-6.5V6h-6v28.5c0 2.5-2 4.5-4.5 4.5s-4.5-2-4.5-4.5 2-4.5 4.5-4.5c.5 0 1 .1 1.5.2V25.5c-.5-.1-1-.2-1.5-.2-5 0-9 4-9 9s4 9 9 9 9-4 9-9V19.5c2 1.2 4.3 2 6.5 2v-6z"/>
-                    </svg>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <!-- Contact Information -->
-            <li class="pt-4">
-              <span class="font-semibold text-red-400">Contact:</span>
-              <div class="mt-3 space-y-2">
-                <p>📞 09452593623</p>
-                <p>✉️ <a href="mailto:kurtsimonclaridad00@gmail.com" class="text-red-400 hover:underline">kurtsimonclaridad00@gmail.com</a></p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      
-      <div class="md:w-1/2 w-full flex justify-center">
-        <img src="P.jpg" alt="Kurt Simon Claridad - Professional portrait photo" class="rounded-full w-48 h-48 md:w-80 md:h-80 border-4 border-red-500 object-cover shadow-lg" loading="lazy">
-      </div>
-    </section>
-
-    <section id="projects" class="section container mx-auto px-4 md:px-6 hidden min-h-[80vh]" aria-label="Projects section">
-      <h2 class="text-2xl md:text-3xl font-bold mb-8 border-b-2 border-red-400 inline-block">Projects</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <!-- Robotics Project with Video -->
-        <div class="bg-gray-900 p-6 rounded-lg shadow-lg hover:shadow-red-400 transition-all duration-300 transform hover:scale-105">
-          <div class="bg-gray-800 h-40 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-            <a href="robot.mp4" target="_blank" class="w-full h-full block">
-              <video class="w-full h-full object-cover rounded-lg cursor-pointer" controls>
-                <source src="robot.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </a>
-          </div>
-          <h3 class="text-xl font-bold text-red-400 mb-2">Robotics Project</h3>
-          <p class="text-gray-300 mb-4">Participated in ICT EXPO 2025, developing innovative robotics solutions with hands-on technical implementation.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">Robotics</span>
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">Hardware</span>
-          </div>
-        </div>
-<!-- reseach -->
-        <div class="bg-gray-900 p-6 rounded-lg shadow-lg hover:shadow-red-400 transition-all duration-300 transform hover:scale-105">
-          <div class="bg-gray-800 h-40 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-            <a href="R.jpg" target="_blank" class="w-full h-full">
-              <img src="R.jpg" alt="Research Project" class="w-full h-full object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity">
-            </a>
-          </div>
-          <h3 class="text-xl font-bold text-red-400 mb-2">Research Project</h3>
-          <p class="text-gray-300 mb-4">Awarded a certificate of Participation by STI West Negros University for active engagement in the Research Convention Workshop, which focused on developing research skills and transforming research ideas into practical output. </p>
-          <div class="flex flex-wrap gap-2">
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">Critical Thinking</span>
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">Analytical Skills</span>
-          </div>
-        </div>
-
-        <!-- Portfolio Website Project -->
-        <div class="bg-gray-900 p-6 rounded-lg shadow-lg hover:shadow-red-400 transition-all duration-300 transform hover:scale-105">
-          <div class="bg-gray-800 h-40 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-            <a href="p.png" target="_blank" class="w-full h-full">
-              <img src="p.png" alt="Portfolio Website" class="w-full h-full object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity">
-            </a>
-          </div>
-          <h3 class="text-xl font-bold text-red-400 mb-2">Portfolio Website</h3>
-          <p class="text-gray-300 mb-4">Personal portfolio built with HTML, CSS, and Tailwind CSS featuring responsive design and interactive elements.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">HTML</span>
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">CSS</span>
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">JavaScript</span>
-          </div>
-        </div>
-
-        <!-- Data Encoding System with Image -->
-        <div class="bg-gray-900 p-6 rounded-lg shadow-lg hover:shadow-red-400 transition-all duration-300 transform hover:scale-105">
-          <div class="bg-gray-800 h-40 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-            <a href="poli.png" target="_blank" class="w-full h-full">
-              <img src="poli.png" alt="Data Encoding System" class="w-full h-full object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity">
-            </a>
-          </div>
-          <h3 class="text-xl font-bold text-red-400 mb-2">Data Encoding System</h3>
-          <p class="text-gray-300 mb-4">Developed encoding system for Tutok Politika, improving data management and processing efficiency.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">Database</span>
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">Data Entry</span>
-          </div>
-        </div>
-
-        <!-- Shoe Inventory System with Images -->
-        <div class="bg-gray-900 p-6 rounded-lg shadow-lg hover:shadow-red-400 transition-all duration-300 transform hover:scale-105">
-          <div class="bg-gray-800 h-40 rounded-lg mb-4 flex items-center justify-center overflow-hidden relative">
-            <a href="lace1.png" target="_blank" class="absolute w-1/2 h-full left-0">
-              <img src="lace1.png" alt="Shoe Inventory System - Image 1" class="w-full h-full object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity">
-            </a>
-            <a href="lace2.png" target="_blank" class="absolute w-1/2 h-full right-0">
-              <img src="lace2.png" alt="Shoe Inventory System - Image 2" class="w-full h-full object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity">
-            </a>
-          </div>
-          <h3 class="text-xl font-bold text-red-400 mb-2">Shoe Inventory System</h3>
-          <p class="text-gray-300 mb-4">Inventory management system for tracking shoe products, stock levels, and sales data with efficient organization.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">Inventory</span>
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">Database</span>
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">Management</span>
-          </div>
-        </div>
-
-        <!-- Capstone Project -->
-        <div class="bg-gray-900 p-6 rounded-lg shadow-lg hover:shadow-red-400 transition-all duration-300 transform hover:scale-105">
-          <div class="bg-gray-800 h-40 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-            <a href="caps.jpg" target="_blank" class="w-full h-full">
-              <img src="caps.jpg" alt="Capstone Project" class="w-full h-full object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity" loading="lazy">
-            </a>
-          </div>
-          <h3 class="text-xl font-bold text-red-400 mb-2">Capstone Project</h3>
-          <p class="text-gray-300 mb-4">Comprehensive capstone project demonstrating full-stack development skills, system design, and implementation as a programmer.</p>
-          <div class="flex flex-wrap gap-2">
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">Programming</span>
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">Development</span>
-            <span class="bg-red-400 text-black text-xs px-2 py-1 rounded">System Design</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="skills" class="section container mx-auto px-4 md:px-6 hidden min-h-[80vh] aria-label="Skills section">
-      <h2 class="text-2xl md:text-3xl font-bold mb-8 border-b-2 border-red-400 inline-block self-start">Skills</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto w-full">
-        <!-- Frontend Skills -->
-        <div class="bg-gray-900 p-6 rounded-lg shadow hover:shadow-red-400">
-          <h3 class="text-xl font-bold text-red-400 mb-4">Frontend</h3>
-          <ul class="space-y-3 text-gray-300">
-            <li class="flex items-center space-x-3">
-              <span class="text-red-400">✓</span>
-              <span>HTML</span>
-            </li>
-            <li class="flex items-center space-x-3">
-              <span class="text-red-400">✓</span>
-              <span>CSS</span>
-            </li>
-            <li class="flex items-center space-x-3">
-              <span class="text-red-400">✓</span>
-              <span>JavaScript</span>
-            </li>
-            <li class="flex items-center space-x-3">
-              <span class="text-red-400">✓</span>
-              <span>Tailwind CSS</span>
-            </li>
-          </ul>
-        </div>
-        <!-- Backend Skills -->
-        <div class="bg-gray-900 p-6 rounded-lg shadow hover:shadow-red-400">
-          <h3 class="text-xl font-bold text-red-400 mb-4">Backend</h3>
-          <ul class="space-y-3 text-gray-300">
-            <li class="flex items-center space-x-3">
-              <span class="text-red-400">✓</span>
-              <span>MySQL</span>
-            </li>
-            <li class="flex items-center space-x-3">
-              <span class="text-red-400">✓</span>
-              <span>Firebase</span>
-            </li>
-          </ul>
-        </div>
-        <!-- Tools Skills -->
-        <div class="bg-gray-900 p-6 rounded-lg shadow hover:shadow-red-400">
-          <h3 class="text-xl font-bold text-red-400 mb-4">Tools</h3>
-          <ul class="space-y-3 text-gray-300">
-            <li class="flex items-center space-x-3">
-              <span class="text-red-400">✓</span>
-              <span>Github</span>
-            </li>
-            <li class="flex items-center space-x-3">
-              <span class="text-red-400">✓</span>
-              <span>Visual Studio Code</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="education" class="section min-h-screen flex items-center justify-center bg-black hidden" aria-label="Education section">
-  <div class="w-full max-w-4xl py-16 text-white px-4 bg-gray-900 rounded-lg shadow-lg">
-    <div class="grid justify-center text-center pb-10">
-      <h2 class="text-xl font-medium text-red-400 pb-3">Education</h2>
-      <h3 class="text-3xl font-medium pb-6 text-white">Academic Background</h3>
-      <ul class="flex justify-center gap-2 pb-8">
-        <li class="w-12 h-1 rounded-lg bg-red-400"></li>
-        <li class="w-6 h-1 rounded-lg bg-red-400"></li>
-        <li class="w-4 h-1 rounded-lg bg-red-400"></li>
+      <ul class="tabs" id="navbar-links">
+        <li><button data-section="home" class="tab is-active">Home.tsx</button></li>
+        <li><button data-section="about" class="tab">About.tsx</button></li>
+        <li><button data-section="skills" class="tab">Skills.json</button></li>
+        <li><button data-section="projects" class="tab">Projects/</button></li>
+        <li><button data-section="education" class="tab">Education.md</button></li>
+        <li><button data-section="experience" class="tab">Experience.log</button></li>
       </ul>
-    </div>
-    <div class="grid gap-10 md:block">
-      <div class="flex flex-col md:grid grid-cols-12 md:items-center group odd:flex-col-reverse gap-3 md:gap-0">
-        <div class="col-span-5 shadow-lg p-5 rounded-lg bg-gray-800 group-hover:bg-red-400 group-hover:text-white transition duration-300 my-4">
-          <p class="line-clamp-6">Completed elementary education with honors and a strong foundation in academics.</p>
-        </div>
-        <div class="col-span-2 h-full md:flex items-center justify-center relative hidden">
-          <span class="w-0.5 h-full bg-red-400 inline-block absolute top-0"></span>
-          <p class="w-14 h-14 flex justify-center items-center rounded-full border-2 border-red-400 text-xl text-red-400 bg-gray-900 group-hover:bg-red-400 group-hover:text-white transition duration-300 z-10">
-            01
-          </p>
-        </div>
-        <div class="col-span-5">
-          <h2 class="text-2xl font-medium text-white">Illuminado Nessia Sr. Elementary School</h2>
-          <h3 class="text-lg text-red-400 pb-2 pt-1">2014-2015</h3>
-        </div>
-      </div>
-      <div class="flex flex-col md:grid grid-cols-12 md:items-center group odd:flex-col-reverse gap-3 md:gap-0">
-        <div class="col-span-5 md:text-right">
-          <h2 class="text-2xl font-medium text-white">Negros Occidental High School</h2>
-          <h3 class="text-lg text-red-400 pb-2 pt-1">2016-2020</h3>
-        </div>
-        <div class="col-span-2 h-full md:flex items-center justify-center relative hidden">
-          <span class="w-0.5 h-full bg-red-400 inline-block absolute top-0"></span>
-          <p class="w-14 h-14 flex justify-center items-center rounded-full border-2 border-red-400 text-xl text-red-400 bg-gray-900 group-hover:bg-red-400 group-hover:text-white transition duration-300 z-10">
-            02
-          </p>
-        </div>
-        <div class="col-span-5 shadow-lg p-5 rounded-lg bg-gray-800 group-hover:bg-red-400 group-hover:text-white transition duration-300 my-4">
-          <p class="line-clamp-6">Graduated high school, actively participated in academic and extracurricular activities.</p>
-        </div>
-      </div>
-      <div class="flex flex-col md:grid grid-cols-12 md:items-center group odd:flex-col-reverse gap-3 md:gap-0">
-        <div class="col-span-5 shadow-lg p-5 rounded-lg bg-gray-800 group-hover:bg-red-400 group-hover:text-white transition duration-300 my-4">
-          <p class="line-clamp-6">Currently pursuing a Bachelor of Science in Information Technology, developing technical and leadership skills.</p>
-        </div>
-        <div class="col-span-2 h-full md:flex items-center justify-center relative hidden">
-          <span class="w-0.5 h-full bg-red-400 inline-block absolute top-0"></span>
-          <p class="w-14 h-14 flex justify-center items-center rounded-full border-2 border-red-400 text-xl text-red-400 bg-gray-900 group-hover:bg-red-400 group-hover:text-white transition duration-300 z-10">
-            03
-          </p>
-        </div>
-        <div class="col-span-5">
-          <h2 class="text-2xl font-medium text-white">STI West Negros University</h2>
-          <h3 class="text-lg text-red-400 pb-2 pt-1">2021-Present</h3>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-    <section id="experience" class="section container mx-auto px-4 md:px-6 hidden min-h-[80vh]" aria-label="Experience section">
-        <h2 class="text-2xl md:text-3xl font-bold mb-8 border-b-2 border-red-400 inline-block">Experience</h2>
-        <div class="space-y-6 text-gray-300">
-          <div>
-            <h3 class="font-bold text-lg md:text-xl text-red-400">Tutok Politika (Encoder) <span class="text-sm text-gray-500">2022-2023</span></h3>
+      <button id="menu-btn" class="menu-btn" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-panel" id="mobile-panel">
+      <button data-section="home" class="tab is-active">Home.tsx</button>
+      <button data-section="about" class="tab">About.tsx</button>
+      <button data-section="skills" class="tab">Skills.json</button>
+      <button data-section="projects" class="tab">Projects/</button>
+      <button data-section="education" class="tab">Education.md</button>
+      <button data-section="experience" class="tab">Experience.log</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HOME -->
+  <section id="home" class="view is-active" aria-label="Home section">
+    <div class="wrap hero">
+      <div class="hero-media">
+        <div class="hero-media__glow" aria-hidden="true"></div>
+        <span class="hero-media__tag hero-media__tag--open" aria-hidden="true">&lt;Developer&gt;</span>
+        <div class="hero-media__frame">
+          <img src="P.jpg" alt="Kurt Simon Claridad profile photo" class="hero-photo" loading="lazy">
+          <div class="hero-badge">
+            <span class="chip-dot" aria-hidden="true"></span>
+            <span><span class="chip-label">build</span> passing</span>
+          </div>
+        </div>
+        <span class="hero-media__tag hero-media__tag--close" aria-hidden="true">&lt;/Developer&gt;</span>
+      </div>
+      <div class="hero-right">
+        <div class="hero-copy">
+          <p class="eyebrow">// portfolio.init()</p>
+          <h1>Hi, I'm <span class="accent">Kurt Simon Claridad</span><br>BSIT Student &amp; Web Developer</h1>
+          <p>Highly skilled and detail-oriented IT student with a strong foundation in Information Technology principles — proficient in web development, database management, and team leadership with hands-on project experience.</p>
+          <div class="cta-row">
+            <button data-section="projects" class="btn btn--primary">View Projects →</button>
+            <button data-section="about" class="btn btn--ghost">Get In Touch</button>
+          </div>
+        </div>
+
+        <div class="terminal" role="img" aria-label="Terminal window introducing Kurt Simon Claridad">
+          <div class="terminal__bar">
+            <span class="tl r"></span><span class="tl y"></span><span class="tl g"></span>
+            <span class="title">kurt@portfolio — zsh</span>
+          </div>
+          <div class="terminal__body">
+            <div class="terminal__line">
+              <span class="prompt">$</span>
+              <span id="hero-cmd"></span><span class="cursor" aria-hidden="true"></span>
+            </div>
+            <div class="terminal__output" id="hero-output">
+              <p>&gt; <span class="key">Kurt Simon Claridad</span></p>
+              <p>&gt; BSIT Student • 4th Year</p>
+              <p>&gt; Bacolod City, Negros Occidental, PH</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="view" aria-label="About section">
+    <div class="wrap section-pad">
+      <p class="section-tag">// about.tsx</p>
+      <h2 class="section-title">A bit <em>about</em> me</h2>
+
+      <div class="about-grid">
+        <div class="reveal">
+          <div class="kv-card">
+            <div class="kv-row"><span class="k">age:</span><span class="v">22</span></div>
+            <div class="kv-row"><span class="k">address:</span><span class="v">Earth Street, Fuentebella Taculing, Bacolod City, Negros Occidental</span></div>
+            <div class="kv-row"><span class="k">year_level:</span><span class="v">4th Year</span></div>
+            <div class="kv-row"><span class="k">status:</span><span class="v">BSIT Student</span></div>
+          </div>
+
+          <div class="interests">
+            <div class="interest-chip"><span class="e">🏀</span><span>Basketball</span></div>
+            <div class="interest-chip"><span class="e">📚</span><span>Reading</span></div>
+            <div class="interest-chip"><span class="e">🎧</span><span>Listening to music</span></div>
+            <div class="interest-chip"><span class="e">🎮</span><span>Online games</span></div>
+          </div>
+
+          <div class="socials">
+            <a href="https://facebook.com/kurtsimonnn" target="_blank" rel="noopener noreferrer" class="social-icon" data-social="facebook" aria-label="Visit Facebook profile">
+              <span class="fill"></span>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.326 24h11.495v-9.294H9.691v-3.622h3.13V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.405 24 24 23.408 24 22.674V1.326C24 .592 23.405 0 22.675 0"/></svg>
+            </a>
+            <a href="https://instagram.com/vinn_whyy" target="_blank" rel="noopener noreferrer" class="social-icon" data-social="instagram" aria-label="Visit Instagram profile">
+              <span class="fill"></span>
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.131 4.659.363 3.678 1.344c-.98.98-1.213 2.092-1.272 3.373C2.013 5.668 2 6.077 2 12c0 5.923.013 6.332.072 7.613.059 1.281.292 2.393 1.272 3.373.98.98 2.092 1.213 3.373 1.272C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.281-.059 2.393-.292 3.373-1.272.98-.98 1.213-2.092 1.272-3.373.059-1.281.072-1.69.072-7.613 0-5.923-.013-6.332-.072-7.613-.059-1.281-.292-2.393-1.272-3.373-.98-.98-2.092-1.213-3.373-1.272C15.668.013 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+            <a href="https://tiktok.com/@kikurtt" target="_blank" rel="noopener noreferrer" class="social-icon" data-social="tiktok" aria-label="Visit TikTok profile">
+              <span class="fill"></span>
+              <svg viewBox="0 0 48 48" fill="currentColor"><path d="M41.5 15.5c-3.6 0-6.5-2.9-6.5-6.5V6h-6v28.5c0 2.5-2 4.5-4.5 4.5s-4.5-2-4.5-4.5 2-4.5 4.5-4.5c.5 0 1 .1 1.5.2V25.5c-.5-.1-1-.2-1.5-.2-5 0-9 4-9 9s4 9 9 9 9-4 9-9V19.5c2 1.2 4.3 2 6.5 2v-6z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="snippet">
+            <div class="snippet__bar mono">profile.js</div>
+            <div class="snippet__body">
+              <div><span class="kw">const</span> <span class="prop">kurt</span> <span class="pun">=</span> <span class="pun">{</span></div>
+              <div>&nbsp;&nbsp;<span class="prop">role</span><span class="pun">:</span> <span class="str">"BSIT Student"</span><span class="pun">,</span></div>
+              <div>&nbsp;&nbsp;<span class="prop">focus</span><span class="pun">:</span> <span class="str">"Web Development"</span><span class="pun">,</span></div>
+              <div>&nbsp;&nbsp;<span class="prop">location</span><span class="pun">:</span> <span class="str">"Bacolod City, PH"</span><span class="pun">,</span></div>
+              <div>&nbsp;&nbsp;<span class="prop">age</span><span class="pun">:</span> <span class="num">22</span><span class="pun">,</span></div>
+              <div>&nbsp;&nbsp;<span class="prop">currentlyBuilding</span><span class="pun">:</span> <span class="str">"a stronger portfolio"</span></div>
+              <div><span class="pun">};</span></div>
+            </div>
+          </div>
+
+          <div class="contact-block">
+            <p>// contact</p>
+            <p>📞 09452593623</p>
+            <p>✉️ <a href="mailto:kurtsimonclaridad00@gmail.com">kurtsimonclaridad00@gmail.com</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="view" aria-label="Skills section">
+    <div class="wrap section-pad">
+      <p class="section-tag">/* skills */</p>
+      <h2 class="section-title">Tools I <em>work</em> with</h2>
+
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="skill-card__head">frontend<span class="accent"> proficiency</span></div>
+          <div class="skill-row"><span class="name">html</span><span class="ver">High</span></div>
+          <div class="skill-row"><span class="name">css</span><span class="ver">High</span></div>
+          <div class="skill-row"><span class="name">javascript</span><span class="ver">High</span></div>
+          <div class="skill-row"><span class="name">react native</span><span class="ver">Mid</span></div>
+          <div class="skill-row"><span class="name">tailwindcss</span><span class="ver">Mid</span></div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-card__head">backend<span class="accent"> proficiency</span></div>
+          <div class="skill-row"><span class="name">mysql</span><span class="ver">Mid</span></div>
+          <div class="skill-row"><span class="name">firebase</span><span class="ver">High</span></div>
+          <div class="skill-row"><span class="name">firestore</span><span class="ver">High</span></div>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-card__head">tools<span class="accent"> proficiency</span></div>
+          <div class="skill-row"><span class="name">github</span><span class="ver">High</span></div>
+          <div class="skill-row"><span class="name">vscode</span><span class="ver">High</span></div>
+          <div class="skill-row"><span class="name">snack expo</span><span class="ver">Mid</span></div>
+          <div class="skill-row"><span class="name">expo</span><span class="ver">Mid</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="view" aria-label="Projects section">
+    <div class="wrap section-pad">
+      <p class="section-tag">// projects</p>
+      <h2 class="section-title">Things I've <em>built</em></h2>
+
+      <div class="projects-grid">
+
+        <div class="project-card reveal">
+          <div class="project-media">
+            <div class="project-media__link" data-lb-src="robot.mp4" data-lb-type="video" role="button" tabindex="0" aria-label="View robotics project video">
+              <video muted playsinline preload="metadata">
+                <source src="robot.mp4" type="video/mp4">
+              </video>
+            </div>
+            <span class="project-media__hint">▶ Play video</span>
+          </div>
+          <div class="project-body">
+            <h3>Robotics Project</h3>
+            <p>Participated in ICT EXPO 2025, developing innovative robotics solutions with hands-on technical implementation.</p>
+            <div class="tag-row"><span class="tag">robotics</span><span class="tag">hardware</span></div>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-media">
+            <div class="project-media__link" data-lb-src="R.jpg" data-lb-type="image" role="button" tabindex="0" aria-label="View research project image">
+              <img src="R.jpg" alt="Research Project" loading="lazy">
+            </div>
+            <span class="project-media__hint">View ↗</span>
+          </div>
+          <div class="project-body">
+            <h3>Research Project</h3>
+            <p>Awarded a Certificate of Participation by STI West Negros University for active engagement in the Research Convention Workshop, focused on developing research skills and transforming ideas into practical output.</p>
+            <div class="tag-row"><span class="tag">critical-thinking</span><span class="tag">analysis</span></div>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-media">
+            <div class="project-media__link" data-lb-src="p.png" data-lb-type="image" role="button" tabindex="0" aria-label="View portfolio website image">
+              <img src="p.png" alt="Portfolio Website" loading="lazy">
+            </div>
+            <span class="project-media__hint">View ↗</span>
+          </div>
+          <div class="project-body">
+            <h3>Portfolio Website</h3>
+            <p>Personal portfolio built with HTML, CSS, and Tailwind CSS featuring responsive design and interactive elements.</p>
+            <div class="tag-row"><span class="tag">html</span><span class="tag">css</span><span class="tag">javascript</span></div>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-media">
+            <div class="project-media__link" data-lb-src="poli.png" data-lb-type="image" role="button" tabindex="0" aria-label="View data encoding system image">
+              <img src="poli.png" alt="Data Encoding System" loading="lazy">
+            </div>
+            <span class="project-media__hint">View ↗</span>
+          </div>
+          <div class="project-body">
+            <h3>Data Encoding System</h3>
+            <p>Developed an encoding system for Tutok Politika, improving data management and processing efficiency.</p>
+            <div class="tag-row"><span class="tag">database</span><span class="tag">data-entry</span></div>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-media project-media--split">
+            <div class="project-media__link" data-lb-src="lace1.png" data-lb-type="image" role="button" tabindex="0" aria-label="View shoe inventory image 1">
+              <img src="lace1.png" alt="Shoe Inventory System - Image 1" loading="lazy">
+            </div>
+            <div class="project-media__link" data-lb-src="lace2.png" data-lb-type="image" role="button" tabindex="0" aria-label="View shoe inventory image 2">
+              <img src="lace2.png" alt="Shoe Inventory System - Image 2" loading="lazy">
+            </div>
+          </div>
+          <div class="project-body">
+            <h3>Shoe Inventory System</h3>
+            <p>Inventory management system for tracking shoe products, stock levels, and sales data with efficient organization.</p>
+            <div class="tag-row"><span class="tag">inventory</span><span class="tag">database</span><span class="tag">management</span></div>
+          </div>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-media">
+            <div class="project-media__link" data-lb-src="caps.jpg" data-lb-type="image" role="button" tabindex="0" aria-label="View capstone project image">
+              <img src="caps.jpg" alt="Capstone Project" loading="lazy">
+            </div>
+            <span class="project-media__hint">View ↗</span>
+          </div>
+          <div class="project-body">
+            <h3>Capstone Project</h3>
+            <p>Comprehensive capstone project demonstrating full-stack development skills, system design, and implementation as a programmer.</p>
+            <div class="tag-row"><span class="tag">programming</span><span class="tag">development</span><span class="tag">system-design</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education" class="view" aria-label="Education section">
+    <div class="wrap section-pad">
+      <p class="section-tag">// education.md</p>
+      <h2 class="section-title">Academic <em>timeline</em></h2>
+
+      <div class="timeline">
+        <div class="timeline__row reveal">
+          <span class="timeline__num">01</span>
+          <div class="timeline__content">
+            <h3>Illuminado Nessia Sr. Elementary School</h3>
+            <span class="when">2014 – 2015</span>
+            <p>Completed elementary education with honors and a strong foundation in academics.</p>
+          </div>
+        </div>
+        <div class="timeline__row reveal">
+          <span class="timeline__num">02</span>
+          <div class="timeline__content">
+            <h3>Negros Occidental High School</h3>
+            <span class="when">2016 – 2020</span>
+            <p>Graduated high school, actively participated in academic and extracurricular activities.</p>
+          </div>
+        </div>
+        <div class="timeline__row reveal">
+          <span class="timeline__num">03</span>
+          <div class="timeline__content">
+            <h3>STI West Negros University</h3>
+            <span class="when">2021 – Present</span>
+            <p>Currently pursuing a Bachelor of Science in Information Technology, developing technical and leadership skills.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="view" aria-label="Experience section">
+    <div class="wrap section-pad">
+      <p class="section-tag">// experience.log</p>
+      <h2 class="section-title">Where I've <em>shown up</em></h2>
+
+      <div class="gitlog">
+        <div class="gitlog__entry reveal">
+          <span class="gitlog__hash">1a2b3c4</span>
+          <div class="gitlog__content">
+            <h3>Tutok Politika — Encoder</h3>
+            <span class="meta">2022 – 2023</span>
             <p>Developed and executed marketing strategies, mentored IT teams, and collaborated on projects.</p>
           </div>
-          <div>
-            <h3 class="font-bold text-lg md:text-xl text-red-400">Programmers Guild (Member) <span class="text-sm text-gray-500">2023-Present</span></h3>
+        </div>
+        <div class="gitlog__entry reveal">
+          <span class="gitlog__hash">5d6e7f8</span>
+          <div class="gitlog__content">
+            <h3>Programmers Guild — Member</h3>
+            <span class="meta">2023 – Present</span>
             <p>Provided support, training, and networking opportunities while fostering a passion for programming.</p>
           </div>
-          <div>
-            <h3 class="font-bold text-lg md:text-xl text-red-400">National Youth Convention <span class="text-sm text-gray-500">2023-2025</span></h3>
+        </div>
+        <div class="gitlog__entry reveal">
+          <span class="gitlog__hash">9a0b1c2</span>
+          <div class="gitlog__content">
+            <h3>National Youth Convention</h3>
+            <span class="meta">2023 – 2025</span>
             <p>Participated in national events, developing leadership and collaboration skills.</p>
           </div>
-          <div>
-            <h3 class="font-bold text-lg md:text-xl text-red-400">Robotics (ICT EXPO) <span class="text-sm text-gray-500">2025</span></h3>
+        </div>
+        <div class="gitlog__entry reveal">
+          <span class="gitlog__hash">c0ffee1</span>
+          <div class="gitlog__content">
+            <h3>Robotics — ICT EXPO</h3>
+            <span class="meta">2025</span>
             <p>Engaged in robotics activities, enhancing problem-solving and technical skills through hands-on projects and competitions.</p>
           </div>
-          <div>
-            <h3 class="font-bold text-lg md:text-xl text-red-400">Capstone Project (Programmer) <span class="text-sm text-gray-500">2025</span></h3>
+        </div>
+        <div class="gitlog__entry reveal">
+          <span class="gitlog__hash">d4e5f6a</span>
+          <div class="gitlog__content">
+            <h3>Capstone Project — Programmer</h3>
+            <span class="meta">2025</span>
             <p>Served as a programmer in developing a comprehensive capstone project, applying IT skills in software development, coding, and system implementation.</p>
           </div>
         </div>
-    </section>
-  </main>
+      </div>
+    </div>
+  </section>
 
+</main>
 
-  <footer class="bg-gray-900 text-center text-gray-500 py-6 text-sm md:text-base">
-    © 2025 Kurt Simon Claridad | Portfolio
-  </footer>
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Project preview">
+  <button class="lightbox__close" aria-label="Close preview">×</button>
+  <div class="lightbox__inner">
+    <div class="lightbox__preview">
+      <img id="lightbox-img" alt="Project preview" hidden>
+      <video id="lightbox-video" controls hidden></video>
+    </div>
+  </div>
+  <span class="lightbox__tap-hint">Tap outside to close</span>
+</div>
 
-  
-  <script>
-    // Section navigation
-    function showSection(sectionId) {
-      document.querySelectorAll('.section').forEach(sec => sec.classList.add('hidden'));
-      document.getElementById(sectionId).classList.remove('hidden');
-      
-      // Update URL hash without scrolling
-      if (history.pushState) {
-        history.pushState(null, null, '#' + sectionId);
-      }
-    }
-    
-    // Initialize with home section
-    showSection('home');
+<footer>
+  <div class="wrap">
+    <p class="echo"><span class="prompt">$</span> echo "Thanks for stopping by" <span class="out">→ Thanks for stopping by</span></p>
+    <p class="copyright">© 2025 Kurt Simon Claridad.</p>
+  </div>
+</footer>
 
-    // Mobile menu toggle
-    const menuBtn = document.getElementById('menu-btn');
-    const navbarLinks = document.getElementById('navbar-links');
-    const hamburgerIcon = document.getElementById('hamburger-icon');
-    const hamburgerPath = document.getElementById('hamburger-path');
-    
-    function toggleMenu() {
-      const isHidden = navbarLinks.classList.toggle('hidden');
-      menuBtn.setAttribute('aria-expanded', !isHidden);
-      
-      // Change icon to X when open
-      if (isHidden) {
-        hamburgerPath.setAttribute('d', 'M4 8h16M4 16h16');
-        hamburgerIcon.classList.remove('rotate-90');
-      } else {
-        hamburgerPath.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-        hamburgerIcon.classList.add('rotate-90');
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- section / tab routing ---------- */
+  var views = document.querySelectorAll('.view');
+  var allTabs = document.querySelectorAll('.tab');
+
+  function showSection(id, push){
+    views.forEach(function(v){ v.classList.toggle('is-active', v.id === id); });
+    allTabs.forEach(function(t){ t.classList.toggle('is-active', t.getAttribute('data-section') === id); });
+    if(push !== false && history.pushState){ history.pushState(null, null, '#' + id); }
+    initRevealsFor(document.getElementById(id));
+    if(id === 'home'){ runHeroTerminal(); }
+  }
+
+  allTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      showSection(tab.getAttribute('data-section'));
+      closeMobileMenu();
+    });
+  });
+
+  /* CTA buttons that navigate to a section */
+  document.querySelectorAll('.btn[data-section]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      showSection(btn.getAttribute('data-section'));
+    });
+  });
+
+  /* ---------- mobile menu ---------- */
+  var menuBtn = document.getElementById('menu-btn');
+  var mobilePanel = document.getElementById('mobile-panel');
+
+  function closeMobileMenu(){
+    mobilePanel.classList.remove('is-open');
+    menuBtn.classList.remove('is-open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }
+  menuBtn.addEventListener('click', function(){
+    var open = mobilePanel.classList.toggle('is-open');
+    menuBtn.classList.toggle('is-open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+  });
+
+  /* ---------- scroll reveal ---------- */
+  var observer = ('IntersectionObserver' in window) ? new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
       }
+    });
+  }, { threshold: 0.12 }) : null;
+
+  function initRevealsFor(container){
+    if(!container) return;
+    var items = container.querySelectorAll('.reveal:not([data-observed])');
+    items.forEach(function(el, i){
+      el.setAttribute('data-observed', '1');
+      if(reduced || !observer){ el.classList.add('is-visible'); return; }
+      el.style.transitionDelay = (i % 6) * 55 + 'ms';
+      observer.observe(el);
+    });
+  }
+
+  /* ---------- LIGHTBOX (fixed) ---------- */
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightbox-img');
+  var lightboxVideo = document.getElementById('lightbox-video');
+
+  function closeLightbox(){
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightboxImg.style.display = 'none';
+    lightboxVideo.style.display = 'none';
+    try{ lightboxVideo.pause(); }catch(e){}
+    try{ lightboxVideo.src = ''; lightboxVideo.load(); }catch(e){}
+    document.body.style.overflow = '';
+  }
+
+  function openLightbox(src, type){
+    // ensure other preview is hidden and any playing video is stopped
+    lightboxImg.style.display = 'none';
+    lightboxVideo.style.display = 'none';
+    try{ lightboxVideo.pause(); }catch(e){}
+    try{ lightboxVideo.src = ''; lightboxVideo.load(); }catch(e){}
+
+    if(type === 'video'){
+      lightboxVideo.src = src;
+      lightboxVideo.style.display = '';
+      lightboxVideo.load();
+      lightboxVideo.play().catch(function(){});
+    } else {
+      lightboxImg.src = src;
+      lightboxImg.style.display = '';
     }
-    
-    menuBtn.addEventListener('click', toggleMenu);
-   
-    // Close menu on mobile
-    function closeMenu() {
-      if (window.innerWidth < 768) {
-        navbarLinks.classList.add('hidden');
-        menuBtn.setAttribute('aria-expanded', 'false');
-        hamburgerPath.setAttribute('d', 'M4 8h16M4 16h16');
-        hamburgerIcon.classList.remove('rotate-90');
-      }
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  /* Attach to all project media links */
+  document.querySelectorAll('.project-media__link').forEach(function(el){
+    function handleOpen(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var src = el.getAttribute('data-lb-src');
+      var type = el.getAttribute('data-lb-type');
+      if(src) openLightbox(src, type);
     }
-   
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!menuBtn.contains(e.target) && !navbarLinks.contains(e.target)) {
-        closeMenu();
-      }
+    el.addEventListener('click', handleOpen);
+    el.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ handleOpen(e); }
     });
-    
-    // Close menu on escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeMenu();
-      }
-    });
-   
-    // Navigation link handlers
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const section = e.target.getAttribute('data-section');
-        showSection(section);
-        closeMenu();
-      });
-    });
-    
-    // Hire Me button handler
-    const hireBtn = document.querySelector('.hire-btn');
-    if (hireBtn) {
-      hireBtn.addEventListener('click', () => {
-        showSection('about');
-        closeMenu();
-      });
+  });
+
+  /* Close on backdrop click (not on inner content) */
+  lightbox.addEventListener('click', function(e){
+    if(e.target === lightbox || e.target.classList.contains('lightbox__tap-hint')){
+      closeLightbox();
     }
-   
-    // Responsive menu handler with debouncing
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        if (window.innerWidth >= 768) {
-          navbarLinks.classList.remove('hidden');
-          menuBtn.setAttribute('aria-expanded', 'true');
-          hamburgerPath.setAttribute('d', 'M4 8h16M4 16h16');
-          hamburgerIcon.classList.remove('rotate-90');
-        } else {
-          navbarLinks.classList.add('hidden');
-          menuBtn.setAttribute('aria-expanded', 'false');
-          hamburgerPath.setAttribute('d', 'M4 8h16M4 16h16');
-          hamburgerIcon.classList.remove('rotate-90');
-        }
-      }, 250);
+  });
+
+  document.querySelector('.lightbox__close').addEventListener('click', closeLightbox);
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && lightbox.classList.contains('is-open')){
+      closeLightbox();
+    }
+  });
+
+  /* ---------- hero photo tilt ---------- */
+  var heroMedia = document.querySelector('.hero-media');
+  var heroFrame = document.querySelector('.hero-media__frame');
+  if(heroMedia && heroFrame && !reduced && window.matchMedia('(pointer: fine)').matches){
+    var heroRect = null;
+    heroMedia.addEventListener('mouseenter', function(){
+      heroRect = heroMedia.getBoundingClientRect();
     });
-    
-    // Handle browser back/forward buttons
-    window.addEventListener('popstate', () => {
-      const hash = window.location.hash.substring(1);
-      if (hash && document.getElementById(hash)) {
-        showSection(hash);
-      } else {
-        showSection('home');
-      }
+    heroMedia.addEventListener('mousemove', function(e){
+      if(!heroRect) heroRect = heroMedia.getBoundingClientRect();
+      var px = (e.clientX - heroRect.left) / heroRect.width;
+      var py = (e.clientY - heroRect.top) / heroRect.height;
+      var rx = (py - 0.5) * -9;
+      var ry = (px - 0.5) * 9;
+      heroFrame.style.transform = 'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
     });
-    
-    // Image lazy loading error handler
-    document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-      img.addEventListener('error', function() {
-        this.style.display = 'none';
-        console.error('Failed to load image:', this.src);
-      });
+    heroMedia.addEventListener('mouseleave', function(){
+      heroFrame.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+      heroRect = null;
     });
-  </script>
+  }
+
+  /* ---------- hero terminal typing ---------- */
+  var heroRan = false;
+  function typeText(el, text, speed){
+    return new Promise(function(resolve){
+      if(reduced){ el.textContent = text; resolve(); return; }
+      var i = 0;
+      el.textContent = '';
+      (function step(){
+        if(i < text.length){
+          el.textContent += text.charAt(i);
+          i++;
+          setTimeout(step, speed + Math.random() * 25);
+        } else { resolve(); }
+      })();
+    });
+  }
+
+  function runHeroTerminal(){
+    if(heroRan) return;
+    heroRan = true;
+    var cmdEl = document.getElementById('hero-cmd');
+    var output = document.getElementById('hero-output');
+    typeText(cmdEl, 'whoami', 55).then(function(){
+      setTimeout(function(){ output.classList.add('is-visible'); }, 250);
+    });
+  }
+
+  /* ---------- init ---------- */
+  var initialHash = window.location.hash.substring(1);
+  var initialId = (initialHash && document.getElementById(initialHash)) ? initialHash : 'home';
+  showSection(initialId, false);
+
+  window.addEventListener('popstate', function(){
+    var hash = window.location.hash.substring(1);
+    showSection((hash && document.getElementById(hash)) ? hash : 'home', false);
+  });
+
+  document.querySelectorAll('img[loading="lazy"]').forEach(function(img){
+    img.addEventListener('error', function(){ this.style.display = 'none'; });
+  });
+})();
+</script>
 </body>
 </html>
